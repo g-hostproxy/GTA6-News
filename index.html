@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Wire · Official GTA 6 News Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0618; --panel:rgba(255,255,255,.055); --line:rgba(255,255,255,.12);
+  --pink:#ff4d9d; --orange:#ffa24a; --teal:#35f0d8; --violet:#8b5cf6;
+  --text:#f6edff; --muted:#a999c4;
+  --display:"Unbounded","Arial Black",sans-serif; --body:"DM Sans",system-ui,sans-serif;
+  --r:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(60% 50% at 85% -5%,rgba(255,77,157,.38),transparent 70%),
+   radial-gradient(55% 45% at 5% 10%,rgba(139,92,246,.35),transparent 70%),
+   radial-gradient(70% 40% at 50% 110%,rgba(255,162,74,.22),transparent 70%)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+  background:rgba(13,6,24,.65);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{font-family:var(--display);font-weight:800;font-size:1.05rem;text-decoration:none;
+  background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav .links{display:flex;gap:20px;margin-left:auto}
+nav .links a{color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem}
+nav .links a:hover{color:var(--text)}
+.pill{font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;border:0;border-radius:999px;padding:9px 18px;color:#1a0b2e;
+  background:linear-gradient(90deg,var(--orange),var(--pink));transition:transform .15s,box-shadow .15s}
+.pill:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px var(--pink)}
+.pill.ghost{background:var(--panel);color:var(--text);border:1px solid var(--line)}
+.pill.ghost:hover{box-shadow:none;border-color:var(--teal)}
+
+/* Hero */
+.hero{padding:84px 0 48px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,9vw,6.4rem);line-height:1;letter-spacing:-.03em;margin:0;max-width:11ch;
+  background:linear-gradient(95deg,#fff 10%,#ffc4e1 45%,var(--pink) 70%,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:46ch;margin:22px 0 0}
+.hero .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:30px}
+.status{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:.95rem}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(53,240,216,.7);animation:ping 2.2s infinite}
+.dot.stale{background:var(--orange);animation:none}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(53,240,216,0)}100%{box-shadow:0 0 0 0 rgba(53,240,216,0)}}
+
+/* Bento */
+h2{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,3vw,1.8rem);letter-spacing:-.02em;margin:72px 0 8px}
+.sub{color:var(--muted);margin:0 0 26px;max-width:60ch}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;text-decoration:none;position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s,background .2s;grid-column:span 2}
+a.tile:hover{border-color:rgba(53,240,216,.6);transform:translateY(-4px);background:rgba(255,255,255,.085)}
+.tile h3{margin:0 0 6px;font-size:1.1rem}
+.tile p{margin:0;color:var(--muted);font-size:.95rem}
+.tile .go{position:absolute;right:18px;top:18px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:var(--teal);font-weight:700}
+.tile.big{grid-column:span 4;grid-row:span 2;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;
+  background:linear-gradient(160deg,rgba(255,77,157,.4),rgba(139,92,246,.25) 60%,rgba(13,6,24,.2)),var(--panel);border-color:rgba(255,77,157,.5)}
+.tile.big h3{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.02em}
+.tile.big p{font-size:1.05rem;max-width:40ch;color:#e8d9fb}
+.tile.big::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;
+  background:linear-gradient(180deg,var(--orange),var(--pink));opacity:.55;filter:blur(2px)}
+.tile.date{grid-column:span 2}
+.tile.date .num{font-family:var(--display);font-weight:800;font-size:2.4rem;line-height:1.1;color:var(--teal);letter-spacing:-.03em}
+.tile.date small{display:block;color:var(--muted);margin-top:8px;font-size:.88rem}
+
+/* Watchlist */
+.watch{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:12px;transition:border-color .2s}
+.card[data-s="announced"]{border-color:rgba(255,162,74,.55)}
+.card[data-s="live"]{border-color:rgba(53,240,216,.6)}
+.card h3{margin:0;font-size:1.1rem}
+.card p{margin:4px 0 0;color:var(--muted);font-size:.93rem}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:rgba(0,0,0,.3);border-radius:999px;padding:4px;gap:2px}
+.seg button{font:inherit;font-size:.85rem;font-weight:500;border:0;border-radius:999px;padding:7px 4px;cursor:pointer;background:transparent;color:var(--muted);transition:background .15s,color .15s}
+.seg button[aria-pressed="true"]{color:#1a0b2e;font-weight:700;background:var(--muted)}
+.card[data-s="announced"] .seg button[aria-pressed="true"]{background:var(--orange)}
+.card[data-s="live"] .seg button[aria-pressed="true"]{background:var(--teal)}
+.card input{font:inherit;width:100%;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--text)}
+.card input::placeholder{color:#7f6f9c}
+
+/* Timeline */
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.tl li{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:18px 22px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line)}
+.tl time{font-family:var(--display);font-weight:500;font-size:.85rem;color:var(--orange);padding-top:3px}
+.tl p{margin:0}
+.note{margin-top:48px;padding:22px;border-radius:var(--r);border:1px dashed var(--line);color:var(--muted);font-size:.95rem}
+.note strong{color:var(--text)}
+footer{padding:44px 0 56px;color:var(--muted);font-size:.85rem;text-align:center}
+
+@media (max-width:820px){
+  nav .links{display:none} nav .pill{margin-left:auto}
+  .tile,.tile.big,.tile.date{grid-column:1/-1;grid-row:auto}
+  .tl li{grid-template-columns:1fr;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#top">Vice Wire</a>
+  <div class="links"><a href="#sources">Sources</a><a href="#watch">Watchlist</a><a href="#timeline">Timeline</a></div>
+  <button class="pill" id="openAll">Open all sources</button>
+</div></nav>
+
+<header class="hero wrap" id="top">
+  <h1>Hear it from Rockstar first.</h1>
+  <p>Official GTA 6 news only: Online, PC, patches and release dates, straight from the source with no recycled articles.</p>
+  <div class="row">
+    <button class="pill" id="markChecked">I checked today</button>
+    <span class="status"><i class="dot stale" id="dot"></i><span id="lastChecked"></span></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="sources">
+    <h2>Official sources</h2>
+    <p class="sub">Every major announcement lands on Rockstar's own channels first. These are the only places this page points to.</p>
+    <div class="bento">
+      <a class="tile big" href="https://www.rockstargames.com/newswire" target="_blank" rel="noopener">
+        <span class="go" aria-hidden="true">↗</span>
+        <h3>Rockstar Newswire</h3>
+        <p>The primary source. Release dates, Online details, title updates and patch notes are posted here first.</p>
+      </a>
+      <div class="tile date">
+        <h3>Scheduled release</h3>
+        <div class="num" id="relNum">Nov 19, 2026</div>
+        <small id="relSub">Last known official date</small>
+      </div>
+      <a class="tile" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener"><span class="go" aria-hidden="true">↗</span><h3>GTA VI page</h3><p>Trailers, screenshots and editions.</p></a>
+      <a class="tile" href="https://support.rockstargames.com" target="_blank" rel="noopener"><span class="go" aria-hidden="true">↗</span><h3>Rockstar Support</h3><p>Known issues, service status, patch info.</p></a>
+      <a class="tile" href="https://x.com/RockstarGames" target="_blank" rel="noopener"><span class="go" aria-hidden="true">↗</span><h3>Rockstar on X</h3><p>Fastest for surprise drops and teasers.</p></a>
+      <a class="tile" href="https://www.youtube.com/@RockstarGames" target="_blank" rel="noopener"><span class="go" aria-hidden="true">↗</span><h3>Rockstar on YouTube</h3><p>Official trailers and videos.</p></a>
+      <a class="tile" href="https://ir.take2games.com" target="_blank" rel="noopener"><span class="go" aria-hidden="true">↗</span><h3>Take-Two Investor Relations</h3><p>Earnings calls often confirm dates and delays.</p></a>
+    </div>
+  </section>
+
+  <section id="watch">
+    <h2>Your watchlist</h2>
+    <p class="sub">Set a status when you see an official post. Changes save in this browser.</p>
+    <div class="watch" id="watchGrid"></div>
+  </section>
+
+  <section id="timeline">
+    <h2>Official timeline</h2>
+    <p class="sub">Milestones from Rockstar announcements. Confirm the latest on the Newswire.</p>
+    <ul class="tl">
+      <li><time>Dec 4, 2023</time><p>First GTA 6 trailer released by Rockstar, a day early after a leak.</p></li>
+      <li><time>May 6, 2025</time><p>Second trailer released, featuring Jason Duval and Lucia Caminos.</p></li>
+      <li><time>Nov 6, 2025</time><p>Release delayed to November 19, 2026 (previously May 26, 2026).</p></li>
+      <li><time>Oct 8, 2026</time><p>Newswire revealed in-game radio and podcasts, and the Rockstar Store opened a GTA VI collection.</p></li>
+    </ul>
+  </section>
+
+  <div class="note"><strong>Why doesn't this update itself?</strong> Rockstar offers no public feed or API, and browsers block pages from reading Rockstar's site directly. For push alerts, turn on notifications for Rockstar on X and subscribe to the Newswire newsletter.</div>
+</main>
+<footer class="wrap">Fan-made tracker. Not affiliated with Rockstar Games or Take-Two Interactive.</footer>
+
+<script>
+const ITEMS=[
+ {id:"release",t:"GTA 6 console release",d:"Last known date: Nov 19, 2026. Confirm launch status on the Newswire.",s:"announced"},
+ {id:"online",t:"GTA 6 Online",d:"Official reveal, name and first details of the online mode.",s:"none"},
+ {id:"pc",t:"PC release date",d:"Not confirmed by Rockstar at the time of writing.",s:"none"},
+ {id:"patch",t:"Title updates and patch notes",d:"Post-launch updates and fixes, posted by Rockstar Support.",s:"none"},
+ {id:"gtao",t:"Future of GTA Online (GTA 5)",d:"What happens to the current GTA Online after GTA 6.",s:"none"}
+];
+const LABELS={none:"Not announced",announced:"Announced",live:"Out now"};
+const KEY="vicewire-v1";
+let state={items:{},last:null};
+try{const r=localStorage.getItem(KEY);if(r)state=Object.assign(state,JSON.parse(r));}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}};
+
+const grid=document.getElementById("watchGrid");
+function render(){
+  grid.innerHTML="";
+  ITEMS.forEach(it=>{
+    const st=state.items[it.id]||{s:it.s,n:""};
+    const el=document.createElement("div");el.className="card";el.dataset.s=st.s;
+    el.innerHTML='<div><h3></h3><p></p></div><div class="seg" role="group"></div><input type="text" placeholder="Note: date, link, or what Rockstar said" aria-label="Note">';
+    el.querySelector("h3").textContent=it.t;
+    el.querySelector("p").textContent=it.d;
+    const seg=el.querySelector(".seg"),inp=el.querySelector("input");inp.value=st.n||"";
+    seg.setAttribute("aria-label","Status for "+it.t);
+    Object.keys(LABELS).forEach(k=>{
+      const b=document.createElement("button");b.textContent=LABELS[k];b.setAttribute("aria-pressed",k===st.s);
+      b.onclick=()=>{state.items[it.id]={s:k,n:inp.value};save();render();};
+      seg.append(b);
+    });
+    inp.oninput=()=>{state.items[it.id]={s:st.s,n:inp.value};save();};
+    grid.append(el);
+  });
+}
+function renderChecked(){
+  const el=document.getElementById("lastChecked"),dot=document.getElementById("dot");
+  if(!state.last){el.textContent="Not checked yet. Start with the Newswire.";dot.className="dot stale";return;}
+  const days=Math.floor((Date.now()-state.last)/864e5);
+  dot.className="dot"+(days<1?"":" stale");
+  el.textContent=days<1?"Checked today. You're up to date.":`Last checked ${days} day${days>1?"s":""} ago`;
+}
+function renderRelease(){
+  const d=Math.round((new Date(2026,10,19)-new Date(new Date().setHours(0,0,0,0)))/864e5);
+  document.getElementById("relSub").textContent=d>0?`In ${d} day${d>1?"s":""}. Last known official date.`:d===0?"Scheduled for today. Check the Newswire.":`${-d} day${d<-1?"s":""} ago. Confirm launch status on the Newswire.`;
+}
+document.getElementById("markChecked").onclick=()=>{state.last=Date.now();save();renderChecked();};
+document.getElementById("openAll").onclick=()=>{
+  document.querySelectorAll("a.tile").forEach(a=>window.open(a.href,"_blank","noopener"));
+  state.last=Date.now();save();renderChecked();
+};
+render();renderChecked();renderRelease();
+</script>
+</body>
+</html>
